@@ -13,5 +13,5 @@ main {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh; /* 背景画像がページ全体を覆うように */
+  height: 300vh;
 }
