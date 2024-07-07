@@ -24,7 +24,7 @@ const Header = () => {
                 width={50}
                 height={50}
               />
-              <span className={`${styles.textWhiteLogo} pr-24`}>Adventure</span>
+              <span className={`${styles.textWhiteLogo} pr-32`}>Adventure</span>
             </div>
           </Link>
         </div>

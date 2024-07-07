@@ -13,8 +13,8 @@ const Custom404 = () => {
       <Image
         src={'/images/male-characters/joker.png'}
         alt="Yatter"
-        width={274}
-        height={263}
+        width={300}
+        height={300}
         className="pt-8"
       />
     </div>
