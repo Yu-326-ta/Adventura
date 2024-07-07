@@ -5,8 +5,7 @@ export default function Home() {
     <>
       <main>
         <Header />
-        <h1>Welcome to the Get Started Page</h1>
-        <h2>冒険を始めよう</h2>
+        <h1>FAQ</h1>
       </main>
     </>
   )

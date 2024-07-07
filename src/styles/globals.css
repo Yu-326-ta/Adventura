@@ -1,12 +1,9 @@
 /* Google Fontsからドット文字フォントをインポート */
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  font-family: 'DotGothic16', sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 main {
   background-image: url('/images/home.jpg');
@@ -14,4 +11,5 @@ main {
   background-position: center;
   background-repeat: no-repeat;
   height: 300vh;
+  font-family: 'DotGothic16', sans-serif !important;
 }

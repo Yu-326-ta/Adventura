@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.textWhite {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.textWhiteLogo {
+  color: rgba(255, 255, 255, 1);
+  font-size: 24px;
+}
+
+/* ロゴとテキストのコンテナ */
+.logo-and-text {
+  display: flex;
+  align-items: center;
+}
+
+/* リンクのスタイル設定 */
+.links {
+  display: flex;
+  gap: 1rem; /* リンク同士のスペースを設定 */
+}
