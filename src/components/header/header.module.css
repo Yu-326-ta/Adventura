@@ -13,10 +13,9 @@
   font-size: 24px;
 }
 
-/* ロゴとテキストのコンテナ */
-.logo-and-text {
-  display: flex;
-  align-items: center;
+.textWhiteIcon {
+  color: rgba(255, 255, 255, 1);
+  font-size: 20px;
 }
 
 /* リンクのスタイル設定 */
