@@ -17,9 +17,3 @@
   color: rgba(255, 255, 255, 1);
   font-size: 20px;
 }
-
-/* リンクのスタイル設定 */
-.links {
-  display: flex;
-  gap: 1rem; /* リンク同士のスペースを設定 */
-}

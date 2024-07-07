@@ -29,7 +29,7 @@ const Header = () => {
           </Link>
         </div>
         <div
-          className={`md:flex md:space-x-4 ${
+          className={`md:flex md:space-x-8 ${
             menuOpen
               ? 'flex flex-col items-end space-y-2 pr-2 pt-2 w-full absolute top-12 left-0 z-20'
               : 'hidden md:flex'
