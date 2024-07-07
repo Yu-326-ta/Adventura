@@ -14,7 +14,7 @@ const Main = () => {
         <p className="mt-4 text-lg text-center text-white text-xl pt-8 md:pt-2">
           ようこそ、「Adventura」へ!✨
           <br />
-          このアプリは、あなたの日常のタスクをワクワクする冒険に変える、ユニークなRPG形式のタスク管理ツールです。
+          このアプリは、あなたの日常のタスクをワクワクする冒険に変える、ユニークなRPG形式のタスク管理ツールです！
         </p>
       </div>
       <div className="md:w-1/2 flex flex-col items-center p-4 space-y-4">
