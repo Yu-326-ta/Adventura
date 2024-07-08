@@ -5,7 +5,7 @@ import Link from 'next/link'
 const Main = () => {
   return (
     <div
-      className={`${styles.mainPage} flex flex-col md:flex-row items-center justify-between md:p-32 pt-12`}
+      className={`${styles.mainPage} flex flex-col md:flex-row items-center justify-between md:p-32 md:py-24 pt-12`}
     >
       <div className="md:w-1/2 md:pl-16">
         <h1 className="text-2xl font-bold text-center text-white text-4xl pt-12 md:pt-0">

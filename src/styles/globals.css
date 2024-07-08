@@ -10,6 +10,5 @@ main {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 300vh;
-  font-family: 'DotGothic16', sans-serif !important;
+  font-family: 'DotGothic16', sans-serif;
 }

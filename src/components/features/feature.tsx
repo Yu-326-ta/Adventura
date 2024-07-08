@@ -4,7 +4,7 @@ import styles from './feature.module.css'
 const Feature = () => {
   return (
     <>
-      <div className="flex flex-col items-center justify-center p-12 pt-24 md:p-0">
+      <div className="flex flex-col items-center justify-center p-12 pt-24">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-center text-white text-4xl">
             人生を冒険に変える「Adventura」
@@ -19,7 +19,7 @@ const Feature = () => {
         </div>
       </div>
       <div
-        className={`${styles.featurePage} flex flex-col md:flex-row items-center justify-between md:p-24 pt-12`}
+        className={`${styles.featurePage} flex flex-col md:flex-row items-center justify-between md:p-24 md:pt-0 pt-12`}
       >
         <div className="md:w-1/3 p-4 m-4">
           <div className="flex justify-center">
