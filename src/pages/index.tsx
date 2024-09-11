@@ -7,17 +7,16 @@ import axios from 'axios'
 import { CsrfToken } from '@/type/Task.type'
 
 export default function Home() {
-  useEffect(() => {
-    console.log(`${process.env.NEXT_PUBLIC_REACT_APP_API_URL}/csrf`)
-    axios.defaults.withCredentials = true
-    const getCsrfToken = async () => {
-      const { data } = await axios.get<CsrfToken>(
-        `${process.env.NEXT_PUBLIC_REACT_APP_API_URL}/csrf`
-      )
-      axios.defaults.headers.common['X-CSRF-Token'] = data.csrf_token
-    }
-    getCsrfToken()
-  }, [])
+  // useEffect(() => {
+  //   axios.defaults.withCredentials = true
+  //   const getCsrfToken = async () => {
+  //     const { data } = await axios.get<CsrfToken>(
+  //       `${process.env.NEXT_PUBLIC_REACT_APP_API_URL}/csrf`
+  //     )
+  //     axios.defaults.headers.common['X-CSRF-Token'] = data.csrf_token
+  //   }
+  //   getCsrfToken()
+  // }, [])
   return (
     <>
       <main>
