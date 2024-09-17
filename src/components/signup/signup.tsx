@@ -1,5 +1,6 @@
 import { Sign } from 'crypto'
 import styles from './signup.module.css'
+import Link from 'next/link'
 
 const Signup = () => {
   return (
@@ -73,12 +74,12 @@ const Signup = () => {
                   アカウント作成
                 </button>
                 <p className="text-sm dark:text-gray-400 flex justify-center items-center">
-                  <a
+                  <Link
                     href="/login"
                     className="font-medium hover:underline dark:text-primary-500"
                   >
-                    ログインはこちら
-                  </a>
+                    アカウントをお持ちの方はこちら
+                  </Link>
                 </p>
               </form>
             </div>

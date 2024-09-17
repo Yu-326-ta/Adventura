@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from './login.module.css'
 
 const Login = () => {
@@ -62,12 +63,12 @@ const Login = () => {
                   ログイン
                 </button>
                 <p className="text-sm dark:text-gray-400 flex justify-center items-center">
-                  <a
+                  <Link
                     href="/signup"
                     className="font-medium hover:underline dark:text-primary-500"
                   >
-                    アカウント作成はこちら
-                  </a>
+                    ログインはこちら
+                  </Link>
                 </p>
               </form>
             </div>
