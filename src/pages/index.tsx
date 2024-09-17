@@ -1,5 +1,5 @@
 import Feature from '@/components/features/feature'
-import Header from '@/components/header/header'
+import Header from '@/components/header-before-login/header'
 import Main from '@/components/main/main'
 import Footer from '@/components/footer/footer'
 import { useEffect } from 'react'

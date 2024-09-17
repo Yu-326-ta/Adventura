@@ -1,4 +1,4 @@
-import Header from '@/components/header/header'
+import Header from '@/components/header-before-login/header'
 import Login from '@/components/login/login'
 import Footer from '@/components/footer/footer'
 
