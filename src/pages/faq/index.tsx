@@ -1,4 +1,4 @@
-import Header from '@/components/header-before-login/header'
+import Header from '@/components/header-before-login/header-before-login'
 
 export default function Home() {
   return (
