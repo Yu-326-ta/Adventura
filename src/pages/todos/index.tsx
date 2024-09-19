@@ -1,12 +1,13 @@
+import Header from '@/components/header-after-login/header-after-login'
+import Login from '@/components/login/login'
 import Footer from '@/components/footer/footer'
-import Header from '@/components/header-before-login/header-before-login'
 
 export default function Home() {
   return (
     <>
       <main>
         <Header />
-        <h1>FAQ</h1>
+        <h1>Todos</h1>
         <Footer />
       </main>
     </>
