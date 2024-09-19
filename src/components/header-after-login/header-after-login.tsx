@@ -40,23 +40,20 @@ const Header = () => {
                 : 'hidden md:flex'
             }`}
           >
-            <Link href="/" className={`${styles.textWhite} md:pt-4 pt-2`}>
-              ホーム
+            <Link href="/todos" className={`${styles.textWhite} md:pt-4 pt-2`}>
+              タスク一覧
             </Link>
-            <Link
-              href="/get-started"
-              className={`${styles.textWhite} md:pt-4 pt-2`}
-            >
-              始めましょう
+            <Link href="/quest" className={`${styles.textWhite} md:pt-4 pt-2`}>
+              クエスト
             </Link>
-            <Link href="/faq" className={`${styles.textWhite} md:pt-4 pt-2`}>
-              よくある質問
+            <Link href="/status" className={`${styles.textWhite} md:pt-4 pt-2`}>
+              ステータス
             </Link>
             {/* ログアウトボタン部分 */}
             <div className="flex items-center ml-auto">
               <button
                 type="submit"
-                className="bg-zinc-900 rounded-lg max-w-xs border-solid border-4 border-white flex items-center justify-center md:px-4 md:py-2 md:mt-2 md:mx-12 text-white py-2 px-1 mt-2"
+                className="bg-zinc-900 rounded-lg max-w-xs border-solid border-4 border-white flex items-center justify-center md:px-10 md:py-1 md:mt-3 md:mx-12 text-white py-2 px-1 mt-2"
               >
                 ログアウト
               </button>
