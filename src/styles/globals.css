@@ -6,17 +6,19 @@
 @tailwind utilities;
 
 main {
+  font-family: 'DotGothic16', sans-serif;
+}
+
+.home-bg {
   background-image: url('/images/home.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  font-family: 'DotGothic16', sans-serif;
 }
 
-/* form {
-  background-image: url('images/scene/shop.jpg');
+.form-bg {
+  background-image: url('/images/scene/form.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  font-family: 'DotGothic16', sans-serif;
-} */
+}

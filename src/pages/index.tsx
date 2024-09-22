@@ -19,7 +19,7 @@ export default function Home() {
   // }, [])
   return (
     <>
-      <main>
+      <main className="home-bg">
         <Header />
         <Main />
         <Feature />
