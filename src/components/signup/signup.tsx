@@ -8,7 +8,7 @@ const Signup = () => {
       <section>
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8 bg-zinc-900 text-white border-solid border-4 border-white rounded-lg">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8 rpg-blowing">
               <h1 className="text-xl leading-tight tracking-tight md:text-2xl dark:text-white">
                 新規登録
               </h1>

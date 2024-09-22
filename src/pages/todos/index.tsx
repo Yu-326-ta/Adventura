@@ -5,7 +5,7 @@ import Footer from '@/components/footer/footer'
 export default function Home() {
   return (
     <>
-      <main>
+      <main className="home-bg">
         <Header />
         <h1>Todos</h1>
         <Footer />

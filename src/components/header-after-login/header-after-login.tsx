@@ -53,7 +53,7 @@ const Header = () => {
             <div className="flex items-center ml-auto">
               <button
                 type="submit"
-                className="bg-zinc-900 rounded-lg max-w-xs border-solid border-4 border-white flex items-center justify-center md:px-10 md:py-1 md:mt-3 md:mx-12 text-white py-2 px-1 mt-2"
+                className="rpg-blowing max-w-xs flex items-center justify-center md:px-10 md:py-1 md:mt-3 md:mx-12 text-white py-2 px-1 mt-2"
               >
                 ログアウト
               </button>
