@@ -1,6 +1,6 @@
-import Header from '@/components/header-after-login/header-after-login'
+import Header from '@/components/common/header-after-login/header-after-login'
 import Login from '@/components/login/login'
-import Footer from '@/components/footer/footer'
+import Footer from '@/components/common/footer/footer'
 import TodosStatus from '@/components/todos-status/todos-status'
 
 export default function Home() {

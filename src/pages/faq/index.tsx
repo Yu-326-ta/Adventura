@@ -1,5 +1,5 @@
-import Footer from '@/components/footer/footer'
-import Header from '@/components/header-before-login/header-before-login'
+import Footer from '@/components/common/footer/footer'
+import Header from '@/components/common/header-before-login/header-before-login'
 
 export default function Home() {
   return (
