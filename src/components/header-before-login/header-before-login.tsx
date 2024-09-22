@@ -48,7 +48,7 @@ const Header = () => {
         <div className="md:hidden flex justify-end w-full" onClick={toggleMenu}>
           <FontAwesomeIcon
             icon={faBars}
-            className={`${styles.textWhiteIcon} pt-1`}
+            className={`${styles.textWhiteIcon} ${styles.HumburgerIcon} pt-1`}
           />
         </div>
       </div>

@@ -67,7 +67,7 @@ const Header = () => {
           >
             <FontAwesomeIcon
               icon={faBars}
-              className={`${styles.textWhiteIcon} pt-1`}
+              className={`${styles.textWhiteIcon} ${styles.HumburgerIcon} pt-1`}
             />
           </div>
         </div>
