@@ -1,0 +1,56 @@
+.todoList {
+  padding: 20px;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .todoList {
+    border-right: 1px solid white;
+  }
+}
+
+.completedTodoList {
+  background-color: transparent;
+  padding: 20px;
+  flex: 1;
+}
+
+.todoTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #9b5b23;
+}
+
+.todoItems {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 2px solid rgba(140, 116, 75, 0.4); /* 下線の色と透明度 */
+  position: relative;
+  color: white;
+}
+
+.todoItem:hover .editBtn {
+  opacity: 1;
+}
+
+.editBtn,
+.saveBtn {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.todoItem:hover .editBtn {
+  opacity: 1;
+}
+
+.saveBtn {
+  margin-left: 10px;
+}
