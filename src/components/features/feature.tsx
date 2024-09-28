@@ -44,7 +44,7 @@ const Feature = () => {
             タスクをこなそう
           </h1>
           <p className="mt-4 text-lg text-center text-white text-lg pt-8 md:pt-2">
-            毎日のタスクをクリアするごとに経験値や報酬を獲得できます！もう退屈なToDoリストとはおさらば！
+            毎日のタスクをクリアするごとに経験値や報酬を獲得できます！もう退屈なToDoアプリとはおさらば！
           </p>
         </div>
         <div className="md:w-1/3 p-4 m-4 pt-24 md:pt-2">

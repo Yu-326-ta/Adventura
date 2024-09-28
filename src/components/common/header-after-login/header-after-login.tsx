@@ -46,8 +46,11 @@ const Header = () => {
             <Link href="/quest" className={`${styles.textWhite} md:pt-4 pt-2`}>
               クエスト
             </Link>
-            <Link href="/status" className={`${styles.textWhite} md:pt-4 pt-2`}>
-              ステータス
+            <Link
+              href="/profile/1"
+              className={`${styles.textWhite} md:pt-4 pt-2`}
+            >
+              プロフィール
             </Link>
             {/* ログアウトボタン部分 */}
             <div className="flex items-center ml-auto">
