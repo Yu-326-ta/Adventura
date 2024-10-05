@@ -38,3 +38,10 @@ main {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.quests-bg {
+  background-image: url('/images/scene/bar.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

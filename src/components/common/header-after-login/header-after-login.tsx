@@ -43,7 +43,7 @@ const Header = () => {
             <Link href="/todos" className={`${styles.textWhite} md:pt-4 pt-2`}>
               タスク一覧
             </Link>
-            <Link href="/quest" className={`${styles.textWhite} md:pt-4 pt-2`}>
+            <Link href="/quests" className={`${styles.textWhite} md:pt-4 pt-2`}>
               クエスト
             </Link>
             <Link
