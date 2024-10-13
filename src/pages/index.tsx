@@ -3,7 +3,6 @@ import Header from '@/components/common/header-before-login/header-before-login'
 import Main from '@/components/main/main'
 import Footer from '@/components/common/footer/footer'
 import { useEffect } from 'react'
-import axios from 'axios'
 import { CsrfToken } from '@/type/Task.type'
 
 export default function Home() {
