@@ -14,7 +14,7 @@ const TodosStatus = () => {
         />
       </div>
       <div className="rpg-blowing py-4 px-12 mx-8 md:mt-0 mt-8 min-w-[400px]">
-        <p className="text-lg text-left text-white text-xl">
+        <p className="text-left text-white text-xl">
           ゆうた
           <br />
           職業：せんし

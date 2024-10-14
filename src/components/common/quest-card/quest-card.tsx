@@ -5,7 +5,9 @@ interface CardComponentProps {
   title: string
   level: string
   content: string
+  experience: number
   imageUrl: string
+  onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
 const QuestCard: React.FC<CardComponentProps> = ({
@@ -13,11 +15,14 @@ const QuestCard: React.FC<CardComponentProps> = ({
   title,
   level,
   content,
+  experience,
   className,
+  onClick,
 }) => {
   return (
     <div
       className={`w-full lg:w-2/3 lg:flex mx-16 my-8 rpg-blowing ${className}`}
+      onClick={onClick}
     >
       <div className="bg-black p-4 flex w-full">
         <div className="my-4">
@@ -26,7 +31,7 @@ const QuestCard: React.FC<CardComponentProps> = ({
             <p className="text-sm py-2">
               難易度：<span className="text-yellow-500">{level}</span>
             </p>
-            <p className="text-sm">獲得経験値：100</p>
+            <p className="text-sm">獲得経験値：{experience}</p>
           </div>
         </div>
       </div>
