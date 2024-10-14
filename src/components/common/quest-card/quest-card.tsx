@@ -21,7 +21,7 @@ const QuestCard: React.FC<CardComponentProps> = ({
 }) => {
   return (
     <div
-      className={`w-full lg:w-2/3 lg:flex mx-16 my-8 rpg-blowing ${className}`}
+      className={`w-full lg:w-10/12 lg:flex mx-16 my-8 rpg-blowing ${className}`}
       onClick={onClick}
     >
       <div className="bg-black p-4 flex w-full">
@@ -36,7 +36,7 @@ const QuestCard: React.FC<CardComponentProps> = ({
         </div>
       </div>
       <div
-        className="h-60 lg:h-auto lg:w-60 flex-none bg-cover"
+        className="h-60 lg:h-auto lg:w-80 flex-none bg-cover"
         style={{ backgroundImage: `url(${imageUrl})` }}
         title="Woman holding a mug"
       ></div>
