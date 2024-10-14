@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const TodosStatus = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center md:py-16 md:px-64 pt-12">
+    <div className="flex flex-col md:flex-row items-center justify-center md:pb-16 md:pt-24 md:px-64 pt-12">
       <div className="flex flex-col items-center md:mx-8 min-w-[200px] min-h-[200px]">
         <Image
           src="/images/male-characters/m-warrior.png"
