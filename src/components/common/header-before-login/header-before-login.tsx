@@ -38,7 +38,7 @@ const Header = () => {
           <Link href="/" className={`${styles.textWhite} pt-1`}>
             ホーム
           </Link>
-          <Link href="/get-started" className={`${styles.textWhite} pt-1`}>
+          <Link href="/signup" className={`${styles.textWhite} pt-1`}>
             始めましょう
           </Link>
           <Link href="/faq" className={`${styles.textWhite} pt-1`}>
