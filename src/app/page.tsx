@@ -8,6 +8,8 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { AuthButtons } from "@/components/auth-buttons";
+import Link from "next/link";
+import { Header } from "@/components/header";
 
 export default function Home() {
   return (
@@ -20,38 +22,7 @@ export default function Home() {
 
       {/* コンテンツ */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* ヘッダー */}
-        <header className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-2">
-            <Image
-              src="/images/weapons/sword.png"
-              alt="Adventura"
-              width={32}
-              height={32}
-            />
-            <h1 className="text-2xl font-bold text-white">Adventura</h1>
-          </div>
-          <nav>
-            <ul className="flex gap-4">
-              <li>
-                <Button
-                  variant="ghost"
-                  className="text-white hover:bg-white/10"
-                >
-                  始めましょう
-                </Button>
-              </li>
-              <li>
-                <Button
-                  variant="ghost"
-                  className="text-white hover:bg-white/10"
-                >
-                  よくある質問
-                </Button>
-              </li>
-            </ul>
-          </nav>
-        </header>
+        <Header />
 
         {/* メインコンテンツ */}
         <div className="mt-24 text-center max-w-4xl mx-auto">
