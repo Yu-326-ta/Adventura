@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" suppressHydrationWarning>
-      <head />
-      <body className={cn(inter.className, "min-h-screen bg-background")}>
-        {children}
-      </body>
-    </html>
+    <ClerkProvider
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
+      afterSignInUrl="/"
+      afterSignUpUrl="/"
+    >
+      <html lang="ja" suppressHydrationWarning>
+        <head />
+        <body className={cn(inter.className, "min-h-screen bg-background")}>
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
