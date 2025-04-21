@@ -1,60 +1,66 @@
 import { SignUp } from "@clerk/nextjs";
 import { Header } from "@/components/header";
 
-export default function SignUpPage() {
+export default function SignUpPage({
+  searchParams,
+}: {
+  searchParams: { redirect_url?: string };
+}) {
+  // リダイレクトURLを取得
+  const redirectUrl = searchParams.redirect_url || "/todo";
+
   return (
     <main
-      className="min-h-screen w-full bg-cover bg-center relative"
+      className="relative min-h-screen bg-cover bg-center"
       style={{ backgroundImage: "url('/images/scene/form.jpg')" }}
     >
       {/* オーバーレイ */}
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/40"></div>
 
       {/* コンテンツ */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Header />
+      <div className="relative z-10 min-h-screen">
+        {/* ヘッダー */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <Header />
+        </div>
 
-        <div className="mt-24 flex justify-center items-center">
-          <div className="w-full max-w-md transform transition-all">
-            {/* 光の効果 - 上部からの光 */}
-            <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 bg-white/20 blur-[100px]" />
+        {/* サインアップフォーム */}
+        <div className="flex flex-col items-center justify-center px-4 mt-16">
+          <div className="max-w-md w-full mx-auto relative">
+            {/* 光の効果 - 上から */}
+            <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-80 h-80 bg-white/10 rounded-full blur-[100px] pointer-events-none"></div>
+            {/* 光の効果 - 右から */}
+            <div className="absolute top-1/2 -right-20 -translate-y-1/2 w-60 h-60 bg-white/5 rounded-full blur-[80px] pointer-events-none"></div>
+            {/* 光の効果 - 下から */}
+            <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-80 h-80 bg-white/10 rounded-full blur-[100px] pointer-events-none"></div>
 
-            {/* 光の効果 - 左上からの斜めの光 */}
-            <div className="absolute -top-10 -left-10 w-60 h-60 bg-white/10 blur-[100px] -rotate-45" />
+            {/* 装飾ボーダー */}
+            <div className="absolute inset-0 border border-white/20 rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.1)] pointer-events-none"></div>
 
-            {/* 光の効果 - 右下からの光 */}
-            <div className="absolute -bottom-20 -right-10 w-40 h-40 bg-white/10 blur-[80px]" />
-
-            {/* メインカード */}
-            <div className="relative">
-              {/* 装飾的な境界線 */}
-              <div className="absolute -inset-0.5 bg-white/10 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000"></div>
-
-              {/* サインアップフォーム */}
+            {/* サインアップフォーム */}
+            <div className="backdrop-blur-md bg-black/30 rounded-xl p-6 shadow-xl relative z-10">
+              <h1 className="text-2xl font-bold text-white text-center mb-6">
+                冒険者登録
+              </h1>
               <SignUp
+                redirectUrl={redirectUrl}
                 appearance={{
                   elements: {
                     formButtonPrimary:
-                      "bg-white/20 backdrop-blur hover:bg-white/30 transform hover:-translate-y-0.5 transition-all duration-200",
-                    footerActionLink:
-                      "text-white/80 hover:text-white transition-colors duration-200",
-                    card: "bg-black/20 backdrop-blur-xl border border-white/10 shadow-2xl rounded-lg overflow-hidden transform hover:scale-[1.01] transition-all duration-300",
-                    headerTitle: "text-white text-2xl font-bold",
-                    headerSubtitle: "text-white/80",
-                    formFieldLabel: "text-white/90",
+                      "bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white transition-all duration-200 shadow-lg hover:shadow-indigo-500/20 hover:-translate-y-1 active:translate-y-0 rounded-md",
+                    footerActionLink: "text-indigo-400 hover:text-indigo-300",
+                    card: "bg-transparent shadow-none",
                     formFieldInput:
-                      "bg-white/5 border border-white/10 text-white placeholder-white/40 focus:border-white/20 focus:ring-2 focus:ring-white/10 transition-all duration-200",
-                    dividerLine: "bg-white/10",
-                    dividerText: "text-white/40",
-                    identityPreviewText: "text-white",
+                      "bg-white/10 border-white/20 text-white placeholder:text-white/50",
                     identityPreviewEditButton:
-                      "text-white/80 hover:text-white transition-colors duration-200",
-                    formResendCodeLink:
-                      "text-white/80 hover:text-white transition-colors duration-200",
-                  },
-                  layout: {
-                    socialButtonsPlacement: "bottom",
-                    socialButtonsVariant: "blockButton",
+                      "text-indigo-400 hover:text-indigo-300",
+                    formFieldLabel: "text-white/70",
+                    dividerLine: "bg-white/20",
+                    dividerText: "text-white/50",
+                    socialButtonsBlockButton:
+                      "border-white/20 hover:bg-white/10 text-white",
+                    socialButtonsBlockButtonText: "text-white",
+                    otpCodeFieldInput: "bg-white/10 border-white/20 text-white",
                   },
                 }}
               />
