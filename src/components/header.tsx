@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export function Header() {
   return (
@@ -21,7 +21,7 @@ export function Header() {
 
           {/* ナビゲーション */}
           <nav>
-            <ul className="flex gap-4">
+            <ul className="flex items-center gap-4">
               <SignedOut>
                 <li>
                   <Link href="/sign-in">
@@ -33,16 +33,26 @@ export function Header() {
                     </Button>
                   </Link>
                 </li>
-              </SignedOut>
-
-              <SignedIn>
                 <li>
-                  <Link href="/dashboard">
+                  <Link href="/faq">
                     <Button
                       variant="ghost"
                       className="text-white hover:bg-white/10"
                     >
-                      ダッシュボード
+                      よくある質問
+                    </Button>
+                  </Link>
+                </li>
+              </SignedOut>
+
+              <SignedIn>
+                <li>
+                  <Link href="/todo">
+                    <Button
+                      variant="ghost"
+                      className="text-white hover:bg-white/10"
+                    >
+                      タスク一覧
                     </Button>
                   </Link>
                 </li>
@@ -56,18 +66,20 @@ export function Header() {
                     </Button>
                   </Link>
                 </li>
+                <li>
+                  <Link href="/profile/me">
+                    <Button
+                      variant="ghost"
+                      className="text-white hover:bg-white/10"
+                    >
+                      プロフィール
+                    </Button>
+                  </Link>
+                </li>
+                <li>
+                  <UserButton afterSignOutUrl="/" />
+                </li>
               </SignedIn>
-
-              <li>
-                <Link href="/faq">
-                  <Button
-                    variant="ghost"
-                    className="text-white hover:bg-white/10"
-                  >
-                    よくある質問
-                  </Button>
-                </Link>
-              </li>
             </ul>
           </nav>
         </div>

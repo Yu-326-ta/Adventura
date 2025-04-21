@@ -22,16 +22,6 @@ export function AuthButtons() {
           </Button>
         </Link>
       </SignedOut>
-      <SignedIn>
-        <UserButton
-          afterSignOutUrl="/"
-          appearance={{
-            elements: {
-              avatarBox: "w-10 h-10",
-            },
-          }}
-        />
-      </SignedIn>
     </div>
   );
 }

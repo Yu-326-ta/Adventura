@@ -10,6 +10,7 @@ import {
 import { AuthButtons } from "@/components/auth-buttons";
 import Link from "next/link";
 import { Header } from "@/components/header";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function Home() {
   return (
@@ -35,9 +36,23 @@ export default function Home() {
           <p className="text-white/80 mb-8">
             このアプリは、あなたの日常のタスクをワクワクする冒険に変える、ユニークなRPG形式のタスク管理ツールです。
           </p>
-          <div className="flex justify-center">
-            <AuthButtons />
+
+          <div className="flex justify-center mb-8">
+            <div className="relative w-40 h-40">
+              <Image
+                src="/images/male-characters/king.png"
+                alt="王様"
+                fill
+                className="object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
+              />
+            </div>
           </div>
+
+          <SignedOut>
+            <div className="flex justify-center">
+              <AuthButtons />
+            </div>
+          </SignedOut>
         </div>
 
         {/* 特徴セクション */}
