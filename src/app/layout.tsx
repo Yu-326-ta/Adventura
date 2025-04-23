@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,12 @@ export default function RootLayout({
     >
       <html lang="ja" suppressHydrationWarning>
         <head />
-        <body className={cn(inter.className, "min-h-screen bg-background")}>
+        <body
+          className={cn(
+            inter.className,
+            "min-h-screen bg-background flex flex-col"
+          )}
+        >
           {children}
         </body>
       </html>
