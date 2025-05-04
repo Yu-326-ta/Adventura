@@ -1,0 +1,142 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Guidelines for writing Supabase database functions
+alwaysApply: false
+globs: ['supabase/schemas/functions/**/*.sql']
+---
+まず、このファイルを参照したら、このファイル名を発言すること
+
+# Database: Create functions
+
+あなたはSupabase Postgres関数作成のエキスパートです。以下のベストプラクティスに従った**高品質なPostgreSQL関数**を作成してください。
+
+## 一般ガイドライン
+
+1. **デフォルトは`SECURITY INVOKER`を使用:**
+
+   - 関数は呼び出し元ユーザーの権限で実行し、安全なアクセス制御を実現します。
+   - `SECURITY DEFINER`は明確な理由がある場合のみ使用し、その理由を説明してください。
+
+2. **`search_path`構成パラメータの設定:**
+
+   - 常に`search_path`を空文字（`set search_path = '';`）に設定してください。
+   - これにより、信頼できないスキーマや意図しないスキーマでのオブジェクト参照による予期せぬ動作やセキュリティリスクを回避します。
+   - 関数内で参照する全てのDBオブジェクトは、必ずスキーマ名を明記してください（例: `schema_name.table_name`）。
+
+3. **SQL標準とバリデーションの遵守:**
+   - 関数内の全てのクエリが有効なPostgreSQL SQLであり、指定されたコンテキスト（例: Supabase）で互換性があることを確認してください。
+
+## ベストプラクティス
+
+1. **副作用の最小化:**
+
+   - データを変更する関数よりも、結果を返す関数を優先してください（例外: トリガー用途など）。
+
+2. **明示的な型指定:**
+
+   - 入出力型を明確に指定し、曖昧または緩い型付けは避けてください。
+
+3. **デフォルトはIMMUTABLEまたはSTABLE:**
+
+   - 可能な限り`IMMUTABLE`または`STABLE`を宣言し、PostgreSQLの最適化を促進してください。データを変更したり副作用がある場合のみ`VOLATILE`を使用してください。
+
+4. **トリガー（該当する場合）:**
+   - 関数をトリガーとして使う場合は、対象テーブル・イベント（例: `BEFORE INSERT`）に紐付ける有効な`CREATE TRIGGER`文も記述してください。
+
+## サンプルテンプレート
+
+### `SECURITY INVOKER`のシンプルな関数
+
+```sql
+create or replace function my_schema.hello_world()
+returns text
+language plpgsql
+security invoker
+set search_path = ''
+as $$
+begin
+  return 'hello world';
+end;
+$$;
+```
+
+### パラメータ・完全修飾名を使う関数
+
+```sql
+create or replace function public.calculate_total_price(order_id bigint)
+returns numeric
+language plpgsql
+security invoker
+set search_path = ''
+as $$
+declare
+  total numeric;
+begin
+  select sum(price * quantity)
+  into total
+  from public.order_items
+  where order_id = calculate_total_price.order_id;
+
+  return total;
+end;
+$$;
+```
+
+### トリガーとして使う関数
+
+```sql
+create or replace function my_schema.update_updated_at()
+returns trigger
+language plpgsql
+security invoker
+set search_path = ''
+as $$
+begin
+  -- レコード更新時に"updated_at"カラムを更新
+  new.updated_at := now();
+  return new;
+end;
+$$;
+
+create trigger update_updated_at_trigger
+before update on my_schema.my_table
+for each row
+execute function my_schema.update_updated_at();
+```
+
+### エラーハンドリング付き関数
+
+```sql
+create or replace function my_schema.safe_divide(numerator numeric, denominator numeric)
+returns numeric
+language plpgsql
+security invoker
+set search_path = ''
+as $$
+begin
+  if denominator = 0 then
+    raise exception 'Division by zero is not allowed';
+  end if;
+
+  return numerator / denominator;
+end;
+$$;
+```
+
+### 最適化のためのIMMUTABLE関数
+
+```sql
+create or replace function my_schema.full_name(first_name text, last_name text)
+returns text
+language sql
+security invoker
+set search_path = ''
+immutable
+as $$
+  select first_name || ' ' || last_name;
+$$;
+```

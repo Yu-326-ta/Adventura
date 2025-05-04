@@ -1,0 +1,152 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Guidelines for writing Postgres SQL
+alwaysApply: false
+globs: ['**/*.sql']
+---
+まず、このファイルを参照したら、このファイル名を発言すること
+
+# Postgres SQL スタイルガイド
+
+## 一般原則
+
+- SQLの予約語はすべて小文字で記述し、一貫性と可読性を保つこと。
+- テーブル名、カラム名、その他のデータベースオブジェクトには、統一された分かりやすい識別子を使用すること。
+- コードの可読性を高めるため、適切な空白とインデントを活用すること。
+- 日付はISO 8601形式（`yyyy-mm-ddThh:mm:ss.sssss`）で保存すること。
+- 複雑なロジックにはコメントを付与すること。ブロックコメントは '/* ... */'、行コメントは '--' を使用。
+
+## 命名規則
+
+- SQLの予約語は避け、名前は一意かつ63文字以内とする。
+- テーブル名・カラム名はスネークケース（snake_case）を使用。
+- テーブル名は複数形を推奨。
+- カラム名は単数形を推奨。
+
+## テーブル
+
+- 'tbl_'のようなプレフィックスは避け、テーブル名とカラム名が一致しないようにする。
+- 特に指定がない限り、`identity generated always`型の`id`カラムを必ず追加する。
+- 特に指定がない限り、すべてのテーブルは`public`スキーマに作成する。
+- SQLクエリには必ずスキーマ名を明記し、分かりやすくする。
+- テーブルの用途を説明するコメントを必ず追加する（最大1024文字）。
+
+## カラム
+
+- カラム名は単数形とし、'id'のような汎用的な名前は避ける。
+- 外部テーブルを参照する場合は、テーブル名の単数形に`_id`を付与（例: `users`テーブル参照なら`user_id`）。
+- 原則として小文字を使用。ただし略語や可読性向上のため例外も認める。
+
+#### 例:
+
+```sql
+create table books (
+  id bigint generated always as identity primary key,
+  title text not null,
+  author_id bigint references authors (id)
+);
+comment on table books is '図書館内のすべての本の一覧。';
+```
+
+
+## クエリ
+
+- クエリが短い場合は数行でまとめる。長くなる場合は可読性のため改行を増やす。
+- 可読性のためスペースを適切に挿入する。
+
+短いクエリ例:
+
+```sql
+select *
+from employees
+where end_date is null;
+
+update employees
+set end_date = '2023-12-31'
+where employee_id = 1001;
+```
+
+長いクエリ例:
+
+```sql
+select
+  first_name,
+  last_name
+from
+  employees
+where
+  start_date between '2021-01-01' and '2021-12-31'
+and
+  status = 'employed';
+```
+
+
+### JOINとサブクエリ
+
+- JOINやサブクエリは、関連するSQL句と揃えて分かりやすく整形する。
+- テーブル参照時はフルテーブル名を推奨。これにより可読性が向上する。
+
+```sql
+select
+  employees.employee_name,
+  departments.department_name
+from
+  employees
+join
+  departments on employees.department_id = departments.department_id
+where
+  employees.start_date > '2022-01-01';
+```
+
+## エイリアス
+
+- データや変換内容を反映した意味のあるエイリアスを使い、必ず 'as' キーワードを明記する。
+
+```sql
+select count(*) as total_employees
+from employees
+where end_date is null;
+```
+
+
+## 複雑なクエリとCTE
+
+- 非常に複雑なクエリの場合はCTE（共通テーブル式）を推奨。
+- CTEは分かりやすく直線的に記述し、パフォーマンスより可読性を優先する。
+- 各ブロックにコメントを付与する。
+
+```sql
+with department_employees as (
+  -- 各従業員とその部署を取得
+  select
+    employees.department_id,
+    employees.first_name,
+    employees.last_name,
+    departments.department_name
+  from
+    employees
+  join
+    departments on employees.department_id = departments.department_id
+),
+employee_counts as (
+  -- 各部署ごとの従業員数をカウント
+  select
+    department_name,
+    count(*) as num_employees
+  from
+    department_employees
+  group by
+    department_name
+)
+select
+  department_name,
+  num_employees
+from
+  employee_counts
+order by
+  department_name;
+```

@@ -1,0 +1,118 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Coding rules for Supabase Edge Functions
+alwaysApply: false
+globs: ['supabase/functions/**/*.ts', 'supabase/functions/**/*.tsx', 'supabase/functions/**/*.js']
+---
+まず、このファイルを参照したら、このファイル名を発言すること
+
+# Supabase Edge Functionsの記述ガイド
+
+あなたはTypeScriptとDeno JavaScriptランタイムのエキスパートです。以下のベストプラクティスに従った**高品質なSupabase Edge Functions**を作成してください。
+
+## ガイドライン
+
+1. 可能な限り外部依存ではなくWeb APIやDenoのコアAPIを使用してください（例: Axiosの代わりにfetch、node-wsの代わりにWebSockets API）。
+2. 複数のEdge Functionでユーティリティメソッドを再利用する場合は、`supabase/functions/_shared`に配置し、相対パスでインポートしてください。Edge Function間の相互依存は避けてください。
+3. 依存パッケージのインポート時はベアスペシファイアを使わず、必ず`npm:`または`jsr:`で始めてください。例: `@supabase/supabase-js`は`npm:@supabase/supabase-js`と記述。
+4. 外部パッケージは必ずバージョンを明記してください。例: `npm:express@4.18.2`。
+5. 外部依存は`npm:`や`jsr:`経由を推奨し、`deno.land/x`や`esm.sh`、`unpkg.com`は最小限に。CDN経由の場合も`npm:`指定に置き換え可能です。
+6. Node組み込みAPIも利用可能です。`node:`プレフィックスでインポートしてください。例: `import process from "node:process"`。Deno APIで不足があればNode APIを活用。
+7. `import { serve } from "https://deno.land/std@0.168.0/http/server.ts"`は使わず、組み込みの`Deno.serve`を使ってください。
+8. 以下の環境変数（シークレット）はSupabase環境で自動設定されます。ユーザーが手動で設定する必要はありません：
+	* SUPABASE_URL
+	* SUPABASE_ANON_KEY
+	* SUPABASE_SERVICE_ROLE_KEY
+	* SUPABASE_DB_URL
+9. その他の環境変数（シークレット）はenvファイルに記載し、`supabase secrets set --env-file path/to/env-file`で設定してください。
+10. 1つのEdge Functionで複数ルートを扱えます。ExpressやHonoなどのライブラリ利用を推奨します。各ルートは`/function-name`で始めてください。
+11. ファイル書き込みは`/tmp`ディレクトリのみ許可されます。DenoまたはNodeのFile APIを利用可能です。
+12. 長時間実行タスクは`EdgeRuntime.waitUntil(promise)`でバックグラウンド実行してください。リクエスト/実行コンテキストでの利用可否は保証しないでください。
+
+## サンプルテンプレート
+
+### シンプルなHello World関数
+
+```tsx
+interface reqPayload {
+	name: string;
+}
+
+console.info('server started');
+
+Deno.serve(async (req: Request) => {
+	const { name }: reqPayload = await req.json();
+	const data = {
+		message: `Hello ${name} from foo!`,
+	};
+
+	return new Response(
+		JSON.stringify(data),
+		{ headers: { 'Content-Type': 'application/json', 'Connection': 'keep-alive' }}
+		);
+});
+```
+
+### Node組み込みAPIを使った例
+
+```tsx
+import { randomBytes } from "node:crypto";
+import { createServer } from "node:http";
+import process from "node:process";
+
+const generateRandomString = (length) => {
+    const buffer = randomBytes(length);
+    return buffer.toString('hex');
+};
+
+const randomString = generateRandomString(10);
+console.log(randomString);
+
+const server = createServer((req, res) => {
+    const message = `Hello`;
+    res.end(message);
+});
+
+server.listen(9999);
+```
+
+### npmパッケージを使った関数例
+
+```tsx
+import express from "npm:express@4.18.2";
+
+const app = express();
+
+app.get(/(.*)/, (req, res) => {
+    res.send("Welcome to Supabase");
+});
+
+app.listen(8000);
+```
+
+### 組み込み@Supabase.ai APIで埋め込み生成
+
+```tsx
+const model = new Supabase.ai.Session('gte-small');
+
+Deno.serve(async (req: Request) => {
+	const params = new URL(req.url).searchParams;
+	const input = params.get('text');
+	const output = await model.run(input, { mean_pool: true, normalize: true });
+	return new Response(
+		JSON.stringify(
+			output,
+		),
+		{
+			headers: {
+				'Content-Type': 'application/json',
+				'Connection': 'keep-alive',
+			},
+		},
+	);
+});
+```

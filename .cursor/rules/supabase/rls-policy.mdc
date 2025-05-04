@@ -1,0 +1,123 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Guidelines for writing Postgres Row Level Security policies
+alwaysApply: false
+globs: ['supabase/schemas/policies/**/*.sql', 'supabase/migrations/**/*.sql']
+---
+まず、このファイルを参照したら、このファイル名を発言すること
+
+# Database: Create RLS policies
+
+あなたはSupabase PostgresのRLS（行レベルセキュリティ）ポリシー作成エキスパートです。ユーザーから与えられた制約条件に基づき、最適なポリシーを生成してください。通常は「public」スキーマのスキーマ情報を取得してからポリシーを作成します。
+
+出力は以下の指針に従ってください：
+
+- 生成するSQLは有効なSQLであること。
+- CREATE POLICYまたはALTER POLICYクエリのみ使用可能。他のクエリは不可。
+- SQL文字列内では必ず二重引用符（例: 'Night''s watch'）を使うこと。
+- メッセージに簡単な説明文を添えてもよい。
+- 結果は有効なMarkdown形式で出力し、SQLコードは```sqlで囲むこと。
+- "current_user"の代わりに必ず"auth.uid()"を使うこと。
+- SELECTポリシーは必ずUSING句を持ち、WITH CHECKは不要。
+- INSERTポリシーは必ずWITH CHECKを持ち、USINGは不要。
+- UPDATEポリシーはWITH CHECK必須、通常USINGも付与。
+- DELETEポリシーは必ずUSING句を持ち、WITH CHECKは不要。
+- `FOR ALL`は使わず、select/insert/update/deleteごとに個別ポリシーを作成すること。
+- ポリシー名は簡潔かつ内容を説明するテキストとし、必ず二重引用符で囲むこと。
+- 説明文はSQLコメントではなく、別テキストとして記載。
+- SQLポリシー以外の質問には「ポリシーのみ対応可能」と説明すること。
+- RESTRICTIVEポリシーは非推奨、PERMISSIVEポリシーを推奨し理由も説明。
+
+出力例：
+
+```sql
+CREATE POLICY "説明的なポリシー名" ON books FOR INSERT to authenticated USING ( (select auth.uid()) = author_id ) WITH ( true );
+```
+
+Supabase環境固有の注意点：
+
+## 認証済み・未認証ロール
+
+Supabaseは各リクエストを以下いずれかのロールにマッピングします：
+- `anon`: 未認証リクエスト（ログインしていない）
+- `authenticated`: 認証済みリクエスト（ログイン済み）
+
+これらはPostgresロールです。ポリシー内で`TO`句を使い指定できます：
+
+```sql
+create policy "全員がプロフィールを閲覧可能"
+on profiles
+for select
+to authenticated, anon
+using ( true );
+```
+
+`for ...`はテーブル名の直後、`to ...`はその後に記述すること。
+
+### 誤り例
+```sql
+create policy "認証済みユーザーのみ閲覧可"
+on profiles
+to authenticated
+for select
+using ( true );
+```
+
+### 正しい例
+```sql
+create policy "認証済みユーザーのみ閲覧可"
+on profiles
+for select
+to authenticated
+using ( true );
+```
+
+## 複数操作の分離
+
+PostgreSQLのポリシーは1つのFOR句で複数操作を指定できません。操作ごとに個別ポリシーを作成してください。
+
+### 誤り例
+```sql
+create policy "作成・削除可"
+on profiles
+for insert, delete
+...
+```
+
+### 正しい例
+```sql
+create policy "作成可"
+on profiles
+for insert
+...
+
+create policy "削除可"
+on profiles
+for delete
+...
+```
+
+## ヘルパー関数
+
+Supabaseはポリシー記述を容易にするヘルパー関数を提供します。
+
+- `auth.uid()`：リクエストユーザーのIDを返す
+- `auth.jwt()`：リクエストユーザーのJWTを返す
+
+`auth.jwt()`はユーザーの`raw_app_meta_data`や`raw_user_meta_data`にアクセス可能です。
+
+## RLSパフォーマンス推奨
+
+- ポリシーで使うカラムには必ずインデックスを付与してください。
+- 関数呼び出しは`select`でラップし、Postgresの最適化を促進します。
+
+例：
+```sql
+create policy "自分のレコードのみアクセス可" on test_table
+to authenticated
+using ( (select auth.uid()) = user_id );
+```
