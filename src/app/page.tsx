@@ -104,7 +104,7 @@ export default async function Home() {
                   <CardHeader>
                     <div className="flex justify-center mb-4">
                       <Image
-                        src="/images/monsters/skeleton.png"
+                        src="/images/monsters/skelton/skeleton.png"
                         alt="モンスター"
                         width={64}
                         height={64}
