@@ -38,27 +38,6 @@ export function Footer() {
             </h3>
             <ul className="space-y-2 text-white/70">
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  ホーム
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/todo"
-                  className="hover:text-white transition-colors"
-                >
-                  タスク管理
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/quests"
-                  className="hover:text-white transition-colors"
-                >
-                  クエスト
-                </Link>
-              </li>
-              <li>
                 <Link
                   href="/faq"
                   className="hover:text-white transition-colors"
@@ -93,21 +72,10 @@ export function Footer() {
             <ul className="space-y-2 text-white/70">
               <li>メール: support@adventura-app.example.com</li>
               <li>お問い合わせ受付時間: 平日 10:00-18:00</li>
-              <li className="pt-2">
-                <a
-                  href="https://github.com/example/adventura"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  <Github size={16} />
-                  <span>GitHub</span>
-                </a>
-              </li>
             </ul>
             <div className="mt-4">
               <p className="text-white/70 text-sm">
-                運営会社: Adventura Technologies株式会社
+                運営会社: Adventura
                 <br />
                 所在地: 東京都渋谷区RPG町1-2-3
               </p>
