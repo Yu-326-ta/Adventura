@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { format } from "date-fns";
-import { ja } from "date-fns/locale";
+// 日時フォーマット関連のimportは不要になりました
 import { Header } from "@/components/header";
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -16,8 +15,24 @@ interface ProfileStats {
   job: string;
   tasksCompleted: number;
   questsCleared: number;
-  startDate: Date;
   username: string;
+  hp: number;
+  maxHp: number;
+  attack: number;
+  defense: number;
+  speed: number;
+}
+
+interface OwnedMonster {
+  id: string;
+  name: string;
+  image_url: string;
+  level: number;
+  experience: number;
+  maxExp: number;
+  hp: number;
+  attack: number;
+  defense: number;
 }
 
 export default function ProfilePage() {
@@ -31,9 +46,38 @@ export default function ProfilePage() {
     job: "せんし",
     tasksCompleted: 152,
     questsCleared: 24,
-    startDate: new Date(2023, 3, 15), // 2023年4月15日
     username: "ゆうた",
+    hp: 480,
+    maxHp: 500,
+    attack: 85,
+    defense: 72,
+    speed: 68,
   });
+
+  const [ownedMonsters, setOwnedMonsters] = useState<OwnedMonster[]>([
+    {
+      id: "1",
+      name: "ウィルオウィスプキノコ",
+      image_url: "/images/monsters/mashroom/mashroom.png",
+      level: 3,
+      experience: 45,
+      maxExp: 100,
+      hp: 120,
+      attack: 25,
+      defense: 15,
+    },
+    {
+      id: "2",
+      name: "ケイブゴーレム",
+      image_url: "/images/monsters/golem/golem.png",
+      level: 5,
+      experience: 120,
+      maxExp: 200,
+      hp: 250,
+      attack: 45,
+      defense: 65,
+    },
+  ]);
 
   // プロフィール情報を取得（実際の実装ではAPIから取得する想定）
   useEffect(() => {
@@ -145,15 +189,176 @@ export default function ProfilePage() {
                   </span>
                 </div>
 
-                {/* 開始日 */}
-                <div className="flex items-center">
-                  <span className="text-white text-xl mr-2">開始日：</span>
-                  <span className="text-gray-300 text-xl">
-                    {format(stats.startDate, "yyyy年MM月dd日", { locale: ja })}
-                  </span>
+                {/* 能力ステータス */}
+                <div className="space-y-2">
+                  <div className="text-white text-lg font-semibold">
+                    能力ステータス
+                  </div>
+
+                  {/* HP */}
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-white text-sm">HP</span>
+                      <span className="text-green-400 text-sm">
+                        {stats.hp}/{stats.maxHp}
+                      </span>
+                    </div>
+                    <div className="relative h-2 bg-gray-800 rounded-full overflow-hidden">
+                      <div
+                        className="absolute inset-0 bg-gradient-to-r from-green-500 to-green-400"
+                        style={{ width: `${(stats.hp / stats.maxHp) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* 攻撃力・防御力・素早さ */}
+                  <div className="grid grid-cols-3 gap-2 mt-2">
+                    <div className="text-center">
+                      <div className="text-white text-xs">攻撃力</div>
+                      <div className="text-red-400 text-lg font-semibold">
+                        {stats.attack}
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-white text-xs">防御力</div>
+                      <div className="text-blue-400 text-lg font-semibold">
+                        {stats.defense}
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-white text-xs">素早さ</div>
+                      <div className="text-yellow-400 text-lg font-semibold">
+                        {stats.speed}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* モンスター所持セクション */}
+          <div className="mt-16 max-w-4xl mx-auto">
+            <h3 className="text-2xl font-bold text-white mb-8 text-center">
+              所持モンスター ({ownedMonsters.length}/5)
+            </h3>
+
+            {/* 装飾的な区切り線 */}
+            <div className="relative mb-8 overflow-hidden">
+              <div className="absolute left-1/2 -translate-x-1/2 w-32 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent" />
+              <div className="absolute left-1/2 -translate-x-1/2 top-2 w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400/50 to-transparent" />
+            </div>
+
+            {/* モンスター表示グリッド */}
+            {ownedMonsters.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                {ownedMonsters.map((monster) => (
+                  <div
+                    key={monster.id}
+                    className="bg-black/70 backdrop-blur-md rounded-lg p-4 shadow-xl border border-white/20 hover:border-purple-400/50 transition-all duration-300"
+                  >
+                    {/* モンスター画像 */}
+                    <div className="relative w-full h-32 mb-4 drop-shadow-[0_0_10px_rgba(147,51,234,0.3)]">
+                      <Image
+                        src={monster.image_url}
+                        alt={monster.name}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+
+                    {/* モンスター情報 */}
+                    <div className="text-center">
+                      <h4 className="text-white font-semibold mb-2 text-sm">
+                        {monster.name}
+                      </h4>
+
+                      <div className="space-y-1 text-xs">
+                        {/* レベル */}
+                        <div className="flex justify-between text-gray-300 mb-1">
+                          <span>Lv:</span>
+                          <span className="text-yellow-400">
+                            {monster.level}
+                          </span>
+                        </div>
+
+                        {/* EXP バー */}
+                        <div className="mb-2">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-gray-300">EXP:</span>
+                            <span className="text-blue-400">
+                              {monster.experience}/{monster.maxExp}
+                            </span>
+                          </div>
+                          <div className="relative h-1 bg-gray-800 rounded-full overflow-hidden">
+                            <div
+                              className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-400"
+                              style={{
+                                width: `${
+                                  (monster.experience / monster.maxExp) * 100
+                                }%`,
+                              }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* 能力ステータス */}
+                        <div className="grid grid-cols-3 gap-1 text-center">
+                          <div>
+                            <div className="text-gray-400 text-xs">HP</div>
+                            <div className="text-green-400 text-xs font-semibold">
+                              {monster.hp}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-gray-400 text-xs">攻撃</div>
+                            <div className="text-red-400 text-xs font-semibold">
+                              {monster.attack}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-gray-400 text-xs">防御</div>
+                            <div className="text-blue-400 text-xs font-semibold">
+                              {monster.defense}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {/* 空のスロット表示 */}
+                {Array.from({ length: 5 - ownedMonsters.length }).map(
+                  (_, index) => (
+                    <div
+                      key={`empty-${index}`}
+                      className="bg-black/30 backdrop-blur-md rounded-lg p-4 border border-white/10 border-dashed"
+                    >
+                      <div className="h-32 flex items-center justify-center mb-4">
+                        <div className="text-white/30 text-4xl">?</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-white/50 text-sm">
+                          空きスロット
+                        </div>
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            ) : (
+              <div className="text-center">
+                <div className="bg-black/50 backdrop-blur-md rounded-lg p-8 border border-white/10">
+                  <div className="text-white/60 text-lg mb-2">
+                    モンスターを所持していません
+                  </div>
+                  <div className="text-white/40 text-sm">
+                    クエストをクリアしてモンスターを仲間にしよう！
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
